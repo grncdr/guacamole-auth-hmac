@@ -17,15 +17,16 @@
         <dependency>
             <groupId>net.sourceforge.guacamole</groupId>
             <artifactId>guacamole-common</artifactId>
-            <version>0.7.0</version>
+            <version>0.8.0</version>
         </dependency>
 
         <!-- Guacamole Extension API -->
         <dependency>
             <groupId>net.sourceforge.guacamole</groupId>
             <artifactId>guacamole-ext</artifactId>
-            <version>0.7.0</version>
+            <version>0.8.0</version>
         </dependency>
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
@@ -40,8 +41,8 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <repositories>
 
+    <repositories>
         <!-- Central Guacamole repository -->
         <repository>
             <id>guac-dev</id>

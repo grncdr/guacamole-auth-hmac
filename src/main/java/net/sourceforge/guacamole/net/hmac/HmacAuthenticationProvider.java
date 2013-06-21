@@ -2,7 +2,7 @@ package net.sourceforge.guacamole.net.hmac;
 
 import net.sourceforge.guacamole.GuacamoleException;
 import net.sourceforge.guacamole.net.auth.Credentials;
-import net.sourceforge.guacamole.net.auth.AuthenticationProvider;
+import net.sourceforge.guacamole.net.auth.simple.SimpleAuthenticationProvider;
 import net.sourceforge.guacamole.properties.GuacamoleProperties;
 import net.sourceforge.guacamole.properties.StringGuacamoleProperty;
 import net.sourceforge.guacamole.protocol.GuacamoleConfiguration;
@@ -10,7 +10,7 @@ import net.sourceforge.guacamole.protocol.GuacamoleConfiguration;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
-public class HmacAuthenticationProvider implements AuthenticationProvider {
+public class HmacAuthenticationProvider extends SimpleAuthenticationProvider {
     public static final String SIGNATURE_PARAM = "signature";
     public static final String ID_PARAM = "id";
     public static final String PARAM_PREFIX = "guac.";
@@ -48,19 +48,30 @@ public class HmacAuthenticationProvider implements AuthenticationProvider {
 
         String signature = request.getParameter(SIGNATURE_PARAM);
 
-        if (signature == null) return null;
+        if (signature == null) {
+            return null;
+        }
+        signature = signature.replace(' ', '+');
+
+        if (!checkTimestamp(request)) {
+            return null;
+        }
 
         GuacamoleConfiguration config = parseConfig(request);
-
         // Hostname is required!
-        if (config.getParameter("hostname") == null)
+        if (config.getParameter("hostname") == null) {
             return null;
+        }
 
         StringBuilder message = new StringBuilder(config.getProtocol());
 
         for (String name : SIGNED_PARAMETERS) {
+            String value = config.getParameter(name);
+            if (value == null) {
+                continue;
+            }
             message.append(name);
-            message.append(config.getParameter(name));
+            message.append(value);
         }
 
         if (!signatureVerifier.verifySignature(signature, message.toString())) {
@@ -71,14 +82,19 @@ public class HmacAuthenticationProvider implements AuthenticationProvider {
         String id = request.getParameter(ID_PARAM);
         if (id == null) id = "DEFAULT";
         configs.put(id, config);
-        System.out.println(":");
         return configs;
+    }
+
+    private boolean checkTimestamp(HttpServletRequest request) {
+        // TODO - add a timestamp parameter to prevent replay attacks
+        return true;
     }
 
     private GuacamoleConfiguration parseConfig(HttpServletRequest request) {
         GuacamoleConfiguration config = new GuacamoleConfiguration();
 
         Map<String, String[]> params = request.getParameterMap();
+
         for (String name : params.keySet()) {
             if (!name.startsWith(PARAM_PREFIX) || params.get(name).length == 0) {
                 continue;

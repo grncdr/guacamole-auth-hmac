@@ -5,6 +5,7 @@ import net.sourceforge.guacamole.GuacamoleException;
 import net.sourceforge.guacamole.net.auth.Credentials;
 import net.sourceforge.guacamole.net.hmac.HmacAuthenticationProvider;
 import net.sourceforge.guacamole.net.hmac.SignatureVerifier;
+import net.sourceforge.guacamole.net.hmac.TimeProviderInterface;
 import net.sourceforge.guacamole.protocol.GuacamoleConfiguration;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,7 @@ public class HmacAuthenticationProviderTest extends TestCase {
         // Test signature was generated with the following PHP snippet
         // base64_encode(hash_hmac('sha1', 'rdphostname10.2.3.4', 'secret', true));
         HttpServletRequest request = mockRequest(new HashMap<String, String>() {{
-            put(ID_PARAM, "connection-id");
+            put(ID_PARAM, "reservation_55.sys1");
             put(SIGNATURE_PARAM, "xgWvnyVtp0ISLiGQ+kmsTbH2rcM=");
             put("guac.hostname", "10.2.3.4");
             put("guac.protocol", "rdp");
@@ -34,7 +35,10 @@ public class HmacAuthenticationProviderTest extends TestCase {
         SignatureVerifier signatureVerifier = mock(SignatureVerifier.class);
         when(signatureVerifier.verifySignature(anyString(), anyString())).thenReturn(true);
 
-        HmacAuthenticationProvider authProvider = new HmacAuthenticationProvider();
+        TimeProviderInterface timeProvider = mock(TimeProviderInterface.class);
+        when(timeProvider.currentTimeMillis()).thenReturn(1373563683000L);
+        // http://bf-moodle.hatsize.int/guacamole/client.xhtml?id=DEFAULT&timestamp=1373563683000&signature=sACLU6NO17Yl922xnhkih7/RXTs=
+        HmacAuthenticationProvider authProvider = new HmacAuthenticationProvider(timeProvider);
 
         Map<String, GuacamoleConfiguration> configs = authProvider.getAuthorizedConfigurations(credentials);
 

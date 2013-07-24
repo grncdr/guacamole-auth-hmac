@@ -77,7 +77,14 @@ public class HmacAuthenticationProvider extends SimpleAuthenticationProvider {
 
     @Override
     public UserContext updateUserContext(UserContext context, Credentials credentials) throws GuacamoleException {
-        GuacamoleConfiguration config = getGuacamoleConfiguration(credentials.getRequest());
+        HttpServletRequest request = credentials.getRequest();
+        String queryString = request.getQueryString();
+        if (queryString == null || queryString.indexOf("connect") < 0) {
+            // Important: bail out if this isn't a request to tunnel?connect
+            // Otherwise getParameter will consume the request body
+            return context;
+        }
+        GuacamoleConfiguration config = getGuacamoleConfiguration(request);
         if (config == null) {
             return context;
         }

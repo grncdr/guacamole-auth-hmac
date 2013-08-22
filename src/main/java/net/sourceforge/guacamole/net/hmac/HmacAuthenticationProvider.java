@@ -4,6 +4,7 @@ import net.sourceforge.guacamole.GuacamoleException;
 import net.sourceforge.guacamole.net.auth.Credentials;
 import net.sourceforge.guacamole.net.auth.UserContext;
 import net.sourceforge.guacamole.net.auth.simple.SimpleAuthenticationProvider;
+import net.sourceforge.guacamole.net.auth.simple.SimpleConnection;
 import net.sourceforge.guacamole.net.auth.simple.SimpleConnectionDirectory;
 import net.sourceforge.guacamole.properties.GuacamoleProperties;
 import net.sourceforge.guacamole.properties.StringGuacamoleProperty;
@@ -84,8 +85,9 @@ public class HmacAuthenticationProvider extends SimpleAuthenticationProvider {
             return context;
         }
         String id = config.getParameter("id");
-        SimpleConnectionDirectory connections = (SimpleConnectionDirectory) context.getConnectionDirectory();
-        connections.putConfig(id, config);
+        SimpleConnectionDirectory connections = (SimpleConnectionDirectory) context.getRootConnectionGroup().getConnectionDirectory();
+        SimpleConnection connection = new SimpleConnection(id, id, config);
+        connections.putConnection(connection);
         return context;
     }
 

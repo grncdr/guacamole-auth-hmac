@@ -12,10 +12,13 @@ user authentication & authorization mechanism.
 
 ## Installation
 
-Currently this plugin requires a [patch to guacamole-client][putconfig-pr]. The
-simplest way to get this running is to [install normally][guac-install] and then
-replace guacamole.war with a custom build of [my branch][putconfig]. The manual
-explains [how to build guacamole-client][guac-build].
+The current release of guacamole-client (0.8.2) is missing some internal APIs
+used by this plugin, so you will have to build the [unstable branch][unstable]
+of Guacamole until those changes are released in a new version.
+
+The simplest way to get this running is to [install normally][guac-install] and
+then replace guacamole.war with a build of [guacamole-client@unstable][unstable].
+The manual explains [how to build guacamole-client][guac-build].
 
 After you have a version of guacamole running that implements
 `SimpleConnectionDirectory.putConfig` you can build, deploy, and configure this
@@ -23,8 +26,7 @@ auth plugin.
 
 [guac-install]: guac-dev.org/doc/gug/installing-guacamole.html
 [guac-build]: http://guac-dev.org/doc/gug/installing-guacamole.html#compiling-guacamole-client
-[putconfig]: https://github.com/grncdr/guacamole-client/tree/putconfig
-[putconfig-pr]: https://github.com/glyptodon/guacamole-client/pull/5
+[unstable]: https://github.com/glyptodon/guacamole-client/tree/unstable
 
 ## Deployment & Configuration
 

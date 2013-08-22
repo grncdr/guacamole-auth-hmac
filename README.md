@@ -18,10 +18,10 @@ of Guacamole until those changes are released in a new version.
 
 The simplest way to get this running is to [install normally][guac-install] and
 then replace guacamole.war with a build of [guacamole-client@unstable][unstable].
-The manual explains [how to build guacamole-client][guac-build].
+The manual explains [how to build guacamole-client from source][guac-build].
 
 After you have a version of guacamole running that implements
-`SimpleConnectionDirectory.putConfig` you can build, deploy, and configure this
+`SimpleConnectionDirectory.putConnection` you can build, deploy, and configure this
 auth plugin.
 
 [guac-install]: guac-dev.org/doc/gug/installing-guacamole.html

@@ -25,7 +25,7 @@ class GuacamoleUrlBuilder {
         $this->secretKey = $secretKey;
     }
 
-    public function url(string $connectionId, string $protocol, string $hostname, $extraParams = array()) {
+    public function url($connectionId, $protocol, $hostname, $extraParams = array()) {
         $timestamp = time() * 1000;
 
         // Array of query parameters to pass to guacamole
@@ -69,11 +69,10 @@ class GuacamoleUrlBuilder {
             $message .= $value;
         }
 
+        print "Message: $message\n";
         return $this->clientUrl . '?'
             . str_replace('+', '%20', http_build_query($qp))
             . '&signature='
             . base64_encode(hash_hmac('sha1', $message, $this->secretKey, 1));
     }
 }
-
-

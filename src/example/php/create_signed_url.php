@@ -14,8 +14,8 @@ $extraParams = array();
 
 foreach ($extraArgs as $pair) {
     list($key, $value) = explode('=', $pair);
-    $extraParams["guac.${key}"] = $value;
+    $extraParams["guac.{$key}"] = $value;
 }
 
-$urlBuilder = new GuacamoleUrlBuilder("http://localhost:8080/guacamole/client.xhtml", "secret key");
+$urlBuilder = new GuacamoleUrlBuilder("secret", "http://localhost:8080/guacamole/client.xhtml");
 print $urlBuilder->url($id, $protocol, $hostname, $extraParams);

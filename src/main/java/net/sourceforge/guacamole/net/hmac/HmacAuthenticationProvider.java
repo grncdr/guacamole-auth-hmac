@@ -36,6 +36,7 @@ public class HmacAuthenticationProvider extends SimpleAuthenticationProvider {
     // Per-request params
     public static final String SIGNATURE_PARAM = "signature";
     public static final String ID_PARAM = "id";
+    public static final String TIMESTAMP_PARAM = "timestamp";
     public static final String PARAM_PREFIX = "guac.";
     public static final long TIMESTAMP_AGE_LIMIT = 10 * 60 * 1000; // 10 minutes
 
@@ -78,18 +79,13 @@ public class HmacAuthenticationProvider extends SimpleAuthenticationProvider {
     @Override
     public UserContext updateUserContext(UserContext context, Credentials credentials) throws GuacamoleException {
         HttpServletRequest request = credentials.getRequest();
-        String queryString = request.getQueryString();
-        if (queryString == null || queryString.indexOf("connect") < 0) {
-            // Important: bail out if this isn't a request to tunnel?connect
-            // Otherwise getParameter will consume the request body
-            return context;
-        }
         GuacamoleConfiguration config = getGuacamoleConfiguration(request);
         if (config == null) {
             return context;
         }
+        String id = config.getParameter("id");
         SimpleConnectionDirectory connections = (SimpleConnectionDirectory) context.getConnectionDirectory();
-        connections.putConfig(config.getParameter("id"), config);
+        connections.putConfig(id, config);
         return context;
     }
 
@@ -104,7 +100,7 @@ public class HmacAuthenticationProvider extends SimpleAuthenticationProvider {
         }
         signature = signature.replace(' ', '+');
 
-        String timestamp = request.getParameter("timestamp");
+        String timestamp = request.getParameter(TIMESTAMP_PARAM);
         if (!checkTimestamp(timestamp)) {
             return null;
         }
@@ -150,7 +146,7 @@ public class HmacAuthenticationProvider extends SimpleAuthenticationProvider {
             return false;
         }
         long timestamp = Long.parseLong(ts, 10);
-        long now = System.currentTimeMillis();
+        long now = timeProvider.currentTimeMillis();
         return Math.abs(timestamp - now) < TIMESTAMP_AGE_LIMIT;
     }
 
@@ -160,14 +156,15 @@ public class HmacAuthenticationProvider extends SimpleAuthenticationProvider {
         Map<String, String[]> params = request.getParameterMap();
 
         for (String name : params.keySet()) {
-            if (!name.startsWith(PARAM_PREFIX) || params.get(name).length == 0) {
+            String value = request.getParameter(name);
+            if (!name.startsWith(PARAM_PREFIX) || value == null || value.length() == 0) {
                 continue;
             }
             else if (name.equals(PARAM_PREFIX + "protocol")) {
-                config.setProtocol(params.get(name)[0]);
+                config.setProtocol(request.getParameter(name));
             }
             else {
-                config.setParameter(name.substring(PARAM_PREFIX.length()), params.get(name)[0]);
+                config.setParameter(name.substring(PARAM_PREFIX.length()), request.getParameter(name));
             }
         }
 

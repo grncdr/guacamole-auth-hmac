@@ -53,7 +53,7 @@ parameters:
    This is used to prevent replay attacks.
  * `signature` - The [request signature][#request-signing]
  * `guac.protocol` - One of `vnc`, `rdp`, or `ssh`.
- * `guac.host` - The hostname of the remote desktop server to connect to.
+ * `guac.hostname` - The hostname of the remote desktop server to connect to.
  * `guac.port` - The port number to connect to.
  * `guac.username` - (_optional_)
  * `guac.password` - (_optional_)
@@ -66,7 +66,7 @@ Requests must be signed with an HMAC, where the message content is generated
 from the request parameters as follows:
 
  1. The parameters `timestamp`, and `guac.protocol` are concatenated.
- 2. For each of `guac.username`, `guac.password`, `guac.host`, and `guac.port`;
+ 2. For each of `guac.username`, `guac.password`, `guac.hostname`, and `guac.port`;
     if the parameter was included in the request, append it's unprefixed name
     (e.g. - `guac.username` becomes `username`) followed by it's value.
 
@@ -74,21 +74,21 @@ from the request parameters as follows:
 
 Given a request for the following URL:
 
-`client.xhtml?id=example&guac.protocol=rdp&guac.host=myserver.internal&guac.port=3389&timestamp=1377143741000`
+`client.xhtml?id=example&guac.protocol=rdp&guac.hostname=myserver.internal&guac.port=3389&timestamp=1377143741000`
 
 The message to be signed will be the concatenation of the following strings:
 
   - `"1377143741000"`
   - `"rdp"`
-  - `"host"`
+  - `"hostname"`
   - `"myserver.internal"`
   - `"port"`
   - `"3389"`
 
 Assuming a secret key of `"secret"`, a `signature` parameter should be appended
 with a value that is the base-64 encoded value of the hash produced by signing
-the message `"1377143741000rdphostmyserver.internalport3389"` with the key
-`"secret"`, or `"NDk3M2E5ZGFhYjU1MzYxNDhmMDY4ZTJlMzc3YjdhNGIyYzMwODQ1Yw"`. How
+the message `"1377143741000rdphostnamemyserver.internalport3389"` with the key
+`"secret"`, or `"Iost5ouayLzpKLgx607kY1QUVwY="`. How
 this signature is produced is dependent on your programming language/platform,
 but with recent versions of PHP it looks like this:
 

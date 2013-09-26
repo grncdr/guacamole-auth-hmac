@@ -18,7 +18,9 @@ of Guacamole until those changes are released in a new version.
 
 The simplest way to get this running is to [install normally][guac-install] and
 then replace guacamole.war with a build of [guacamole-client@unstable][unstable].
-The manual explains [how to build guacamole-client from source][guac-build].
+The manual explains [how to build guacamole-client from source][guac-build]. After building
+guacamole-client (via `mvn package`) it is helpful to install to your local Maven
+repository: `mvn install`.
 
 After you have a version of guacamole running that implements
 `SimpleConnectionDirectory.putConnection` you can build, deploy, and configure this
@@ -27,6 +29,14 @@ auth plugin.
 [guac-install]: guac-dev.org/doc/gug/installing-guacamole.html
 [guac-build]: http://guac-dev.org/doc/gug/installing-guacamole.html#compiling-guacamole-client
 [unstable]: https://github.com/glyptodon/guacamole-client/tree/unstable
+
+## Building
+
+guacamole-auth-hmac uses Maven for managing builds. After installing Maven and building and 
+installing guacamole-client in your local repository, build guacamole-auth-hmac:
+`mvn package`
+
+The resulting jar file will be placed in `target/guacamole-auth-hmac-<version>.jar`.
 
 ## Deployment & Configuration
 

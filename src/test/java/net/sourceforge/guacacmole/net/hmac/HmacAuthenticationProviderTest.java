@@ -1,11 +1,11 @@
 package net.sourceforge.guacacmole.net.hmac;
 
 import junit.framework.TestCase;
-import net.sourceforge.guacamole.GuacamoleException;
-import net.sourceforge.guacamole.net.auth.Credentials;
-import net.sourceforge.guacamole.net.hmac.HmacAuthenticationProvider;
-import net.sourceforge.guacamole.net.hmac.TimeProviderInterface;
-import net.sourceforge.guacamole.protocol.GuacamoleConfiguration;
+import org.glyptodon.guacamole.GuacamoleException;
+import org.glyptodon.guacamole.net.auth.Credentials;
+import org.glyptodon.guacamole.net.hmac.HmacAuthenticationProvider;
+import org.glyptodon.guacamole.net.hmac.TimeProviderInterface;
+import org.glyptodon.guacamole.protocol.GuacamoleConfiguration;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-import static net.sourceforge.guacamole.net.hmac.HmacAuthenticationProvider.*;
+import static org.glyptodon.guacamole.net.hmac.HmacAuthenticationProvider.*;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 public class HmacAuthenticationProviderTest extends TestCase {
 
     public void testSuccess() throws GuacamoleException {
-        final String connectionId = "my-connection";
+        final String connectionId = "c/my-connection";
 
         HttpServletRequest request = mockRequest(new HashMap<String, String>() {{
             put(ID_PARAM,        connectionId);
@@ -45,7 +45,7 @@ public class HmacAuthenticationProviderTest extends TestCase {
 
         assertNotNull(configs);
         assertEquals(1, configs.size());
-        GuacamoleConfiguration config = configs.get(connectionId);
+        GuacamoleConfiguration config = configs.get(connectionId.substring(2));
         assertNotNull(config);
         assertEquals("rdp", config.getProtocol());
     }

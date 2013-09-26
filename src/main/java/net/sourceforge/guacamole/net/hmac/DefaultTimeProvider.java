@@ -1,4 +1,4 @@
-package net.sourceforge.guacamole.net.hmac;
+package org.glyptodon.guacamole.net.hmac;
 
 /**
  * Created with IntelliJ IDEA.

@@ -1,14 +1,14 @@
-package net.sourceforge.guacamole.net.hmac;
+package org.glyptodon.guacamole.net.hmac;
 
-import net.sourceforge.guacamole.GuacamoleException;
-import net.sourceforge.guacamole.net.auth.Credentials;
-import net.sourceforge.guacamole.net.auth.UserContext;
-import net.sourceforge.guacamole.net.auth.simple.SimpleAuthenticationProvider;
-import net.sourceforge.guacamole.net.auth.simple.SimpleConnection;
-import net.sourceforge.guacamole.net.auth.simple.SimpleConnectionDirectory;
-import net.sourceforge.guacamole.properties.GuacamoleProperties;
-import net.sourceforge.guacamole.properties.StringGuacamoleProperty;
-import net.sourceforge.guacamole.protocol.GuacamoleConfiguration;
+import org.glyptodon.guacamole.GuacamoleException;
+import org.glyptodon.guacamole.net.auth.Credentials;
+import org.glyptodon.guacamole.net.auth.UserContext;
+import org.glyptodon.guacamole.net.auth.simple.SimpleAuthenticationProvider;
+import org.glyptodon.guacamole.net.auth.simple.SimpleConnection;
+import org.glyptodon.guacamole.net.auth.simple.SimpleConnectionDirectory;
+import org.glyptodon.guacamole.properties.GuacamoleProperties;
+import org.glyptodon.guacamole.properties.StringGuacamoleProperty;
+import org.glyptodon.guacamole.protocol.GuacamoleConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -87,7 +87,7 @@ public class HmacAuthenticationProvider extends SimpleAuthenticationProvider {
         String id = config.getParameter("id");
         SimpleConnectionDirectory connections = (SimpleConnectionDirectory) context.getRootConnectionGroup().getConnectionDirectory();
         SimpleConnection connection = new SimpleConnection(id, id, config);
-        connections.add(connection);
+        connections.putConnection(connection);
         return context;
     }
 
@@ -137,6 +137,11 @@ public class HmacAuthenticationProvider extends SimpleAuthenticationProvider {
         String id = request.getParameter(ID_PARAM);
         if (id == null) {
             id = "DEFAULT";
+        } else {
+        	// This should really use BasicGuacamoleTunnelServlet's IdentfierType, but it is private!
+        	// Currently, the only prefixes are both 2 characters in length, but this could become invalid at some point.
+        	// see: guacamole-client@a0f5ccb:guacamole/src/main/java/org/glyptodon/guacamole/net/basic/BasicGuacamoleTunnelServlet.java:244-252
+        	id = id.substring(2);
         }
         // This isn't normally part of the config, but it makes it much easier to return a single object
         config.setParameter("id", id);

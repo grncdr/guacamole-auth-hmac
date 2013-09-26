@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 public class HmacAuthenticationProviderTest extends TestCase {
 
     public void testSuccess() throws GuacamoleException {
-        final String connectionId = "my-connection";
+        final String connectionId = "c/my-connection";
 
         HttpServletRequest request = mockRequest(new HashMap<String, String>() {{
             put(ID_PARAM,        connectionId);
@@ -45,7 +45,7 @@ public class HmacAuthenticationProviderTest extends TestCase {
 
         assertNotNull(configs);
         assertEquals(1, configs.size());
-        GuacamoleConfiguration config = configs.get(connectionId);
+        GuacamoleConfiguration config = configs.get(connectionId.substring(2));
         assertNotNull(config);
         assertEquals("rdp", config.getProtocol());
     }

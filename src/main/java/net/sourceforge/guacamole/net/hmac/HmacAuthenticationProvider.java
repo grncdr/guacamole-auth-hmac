@@ -87,7 +87,7 @@ public class HmacAuthenticationProvider extends SimpleAuthenticationProvider {
         String id = config.getParameter("id");
         SimpleConnectionDirectory connections = (SimpleConnectionDirectory) context.getRootConnectionGroup().getConnectionDirectory();
         SimpleConnection connection = new SimpleConnection(id, id, config);
-        connections.add(connection);
+        connections.putConnection(connection);
         return context;
     }
 
@@ -137,6 +137,11 @@ public class HmacAuthenticationProvider extends SimpleAuthenticationProvider {
         String id = request.getParameter(ID_PARAM);
         if (id == null) {
             id = "DEFAULT";
+        } else {
+        	// This should really use BasicGuacamoleTunnelServlet's IdentfierType, but it is private!
+        	// Currently, the only prefixes are both 2 characters in length, but this could become invalid at some point.
+        	// see: org/glyptodon/guacamole/net/basic/BasicGuacamoleTunnelServlet.java:244-252
+        	id = id.substring(2);
         }
         // This isn't normally part of the config, but it makes it much easier to return a single object
         config.setParameter("id", id);

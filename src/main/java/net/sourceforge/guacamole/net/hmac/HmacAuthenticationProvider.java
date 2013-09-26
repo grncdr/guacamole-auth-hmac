@@ -1,14 +1,14 @@
-package net.sourceforge.guacamole.net.hmac;
+package org.glyptodon.guacamole.net.hmac;
 
-import net.sourceforge.guacamole.GuacamoleException;
-import net.sourceforge.guacamole.net.auth.Credentials;
-import net.sourceforge.guacamole.net.auth.UserContext;
-import net.sourceforge.guacamole.net.auth.simple.SimpleAuthenticationProvider;
-import net.sourceforge.guacamole.net.auth.simple.SimpleConnection;
-import net.sourceforge.guacamole.net.auth.simple.SimpleConnectionDirectory;
-import net.sourceforge.guacamole.properties.GuacamoleProperties;
-import net.sourceforge.guacamole.properties.StringGuacamoleProperty;
-import net.sourceforge.guacamole.protocol.GuacamoleConfiguration;
+import org.glyptodon.guacamole.GuacamoleException;
+import org.glyptodon.guacamole.net.auth.Credentials;
+import org.glyptodon.guacamole.net.auth.UserContext;
+import org.glyptodon.guacamole.net.auth.simple.SimpleAuthenticationProvider;
+import org.glyptodon.guacamole.net.auth.simple.SimpleConnection;
+import org.glyptodon.guacamole.net.auth.simple.SimpleConnectionDirectory;
+import org.glyptodon.guacamole.properties.GuacamoleProperties;
+import org.glyptodon.guacamole.properties.StringGuacamoleProperty;
+import org.glyptodon.guacamole.protocol.GuacamoleConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

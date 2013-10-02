@@ -1,4 +1,4 @@
-package org.glyptodon.guacamole.net.hmac;
+package com.stephensugden.guacamole.net.hmac;
 
 import org.glyptodon.guacamole.GuacamoleException;
 import org.glyptodon.guacamole.net.auth.Credentials;

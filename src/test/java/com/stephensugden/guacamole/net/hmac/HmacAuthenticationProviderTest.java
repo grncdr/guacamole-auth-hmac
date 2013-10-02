@@ -1,10 +1,8 @@
-package net.sourceforge.guacacmole.net.hmac;
+package com.stephensugden.guacamole.net.hmac;
 
 import junit.framework.TestCase;
 import org.glyptodon.guacamole.GuacamoleException;
 import org.glyptodon.guacamole.net.auth.Credentials;
-import org.glyptodon.guacamole.net.hmac.HmacAuthenticationProvider;
-import org.glyptodon.guacamole.net.hmac.TimeProviderInterface;
 import org.glyptodon.guacamole.protocol.GuacamoleConfiguration;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -13,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.glyptodon.guacamole.net.hmac.HmacAuthenticationProvider.*;
+import static com.stephensugden.guacamole.net.hmac.HmacAuthenticationProvider.*;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

@@ -42,7 +42,7 @@ The resulting jar file will be placed in `target/guacamole-auth-hmac-<version>.j
 
 Copy `guacamole-auth-hmac.jar` to the location specified by
 [`lib-directory`][config-classpath] in `guacamole.properties`. Then set the
-`auth-provider` property to `net.sourceforge.guacamole.net.hmac.HmacAuthenticationProvider`.
+`auth-provider` property to `com.stephensugden.guacamole.net.hmac.HmacAuthenticationProvider`.
 
 `guacamole-auth-hmac` adds one new config key to `guacamole.properties`:
 

@@ -1,4 +1,4 @@
-package org.glyptodon.guacamole.net.hmac;
+package com.stephensugden.guacamole.net.hmac;
 
 /**
  * Created with IntelliJ IDEA.

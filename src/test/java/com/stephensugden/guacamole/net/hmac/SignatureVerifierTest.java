@@ -1,7 +1,7 @@
-package net.sourceforge.guacacmole.net.hmac;
+package com.stephensugden.guacamole.net.hmac;
 
 import junit.framework.TestCase;
-import org.glyptodon.guacamole.net.hmac.SignatureVerifier;
+import com.stephensugden.guacamole.net.hmac.SignatureVerifier;
 
 public class SignatureVerifierTest extends TestCase {
     private SignatureVerifier verifier;

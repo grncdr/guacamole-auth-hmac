@@ -48,6 +48,31 @@ public class HmacAuthenticationProviderTest extends TestCase {
         assertEquals("rdp", config.getProtocol());
     }
 
+    public void testFailure() throws GuacamoleException {
+        final String connectionId = "c/my-connection";
+        HttpServletRequest request = mockRequest(new HashMap<String, String>() {{
+            put(ID_PARAM,        connectionId);
+            put("timestamp",     "1373563683000");
+            put("guac.hostname", "10.2.3.5");  // changed hostname should invalidate signature
+            put("guac.protocol", "rdp");
+            put("guac.port",     "3389");
+            // Test signature was generated with the following PHP snippet
+            // base64_encode(hash_hmac('sha1', '1373563683000rdphostname10.2.3.4port3389', 'secret', true));
+            put(SIGNATURE_PARAM, "6PHOr00TnhA10Ef9I4bLqeSXKYg=");
+        }});
+
+        Credentials credentials = new Credentials();
+        credentials.setRequest(request);
+
+        TimeProviderInterface timeProvider = mock(TimeProviderInterface.class);
+        when(timeProvider.currentTimeMillis()).thenReturn(1373563683000L);
+        HmacAuthenticationProvider authProvider = new HmacAuthenticationProvider(timeProvider);
+
+        Map<String, GuacamoleConfiguration> configs = authProvider.getAuthorizedConfigurations(credentials);
+
+        assertNull(configs);
+    }
+
     private static HttpServletRequest mockRequest(final Map<String, String> queryParams) {
         HttpServletRequest request = mock(HttpServletRequest.class);
 

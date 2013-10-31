@@ -1,4 +1,4 @@
-# guacamole-auth-hmac
+# guacamole-auth-hmac [![Build Status](https://travis-ci.org/grncdr/guacamole-auth-hmac.png?branch=master)](https://travis-ci.org/grncdr/guacamole-auth-hmac)
 
 ## Description
 

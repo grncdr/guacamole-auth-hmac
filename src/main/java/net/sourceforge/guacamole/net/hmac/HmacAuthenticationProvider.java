@@ -7,17 +7,16 @@ import net.sourceforge.guacamole.net.auth.simple.SimpleAuthenticationProvider;
 import net.sourceforge.guacamole.net.auth.simple.SimpleConnection;
 import net.sourceforge.guacamole.net.auth.simple.SimpleConnectionDirectory;
 import net.sourceforge.guacamole.properties.GuacamoleProperties;
+import net.sourceforge.guacamole.properties.IntegerGuacamoleProperty;
 import net.sourceforge.guacamole.properties.StringGuacamoleProperty;
 import net.sourceforge.guacamole.protocol.GuacamoleConfiguration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 public class HmacAuthenticationProvider extends SimpleAuthenticationProvider {
 
-    private Logger logger = LoggerFactory.getLogger(HmacAuthenticationProvider.class);
+    public static final long TEN_MINUTES = 10 * 60 * 1000;
 
     // Properties file params
     private static final StringGuacamoleProperty SECRET_KEY = new StringGuacamoleProperty() {
@@ -30,16 +29,20 @@ public class HmacAuthenticationProvider extends SimpleAuthenticationProvider {
         public String getName() { return "default-protocol"; }
     };
 
-    // this will be overridden by properties file if present
-    private String defaultProtocol = "rdp";
+    private static final IntegerGuacamoleProperty TIMESTAMP_AGE_LIMIT = new IntegerGuacamoleProperty() {
+        @Override
+        public String getName() { return "timestamp-age-limit"; }
+    };
 
+    // these will be overridden by properties file if present
+    private String defaultProtocol = "rdp";
+    private long timestampAgeLimit = TEN_MINUTES; // 10 minutes
 
     // Per-request params
     public static final String SIGNATURE_PARAM = "signature";
     public static final String ID_PARAM = "id";
     public static final String TIMESTAMP_PARAM = "timestamp";
     public static final String PARAM_PREFIX = "guac.";
-    public static final long TIMESTAMP_AGE_LIMIT = 10 * 60 * 1000; // 10 minutes
 
     private static final List<String> SIGNED_PARAMETERS = new ArrayList<String>() {{
         add("username");
@@ -149,7 +152,7 @@ public class HmacAuthenticationProvider extends SimpleAuthenticationProvider {
         }
         long timestamp = Long.parseLong(ts, 10);
         long now = timeProvider.currentTimeMillis();
-        return Math.abs(timestamp - now) < TIMESTAMP_AGE_LIMIT;
+        return timestamp + timestampAgeLimit > now;
     }
 
     private GuacamoleConfiguration parseConfigParams(HttpServletRequest request) {
@@ -180,5 +183,10 @@ public class HmacAuthenticationProvider extends SimpleAuthenticationProvider {
         signatureVerifier = new SignatureVerifier(secretKey);
         defaultProtocol = GuacamoleProperties.getProperty(DEFAULT_PROTOCOL);
         if (defaultProtocol == null) defaultProtocol = "rdp";
+        if (GuacamoleProperties.getProperty(TIMESTAMP_AGE_LIMIT) == null){
+           timestampAgeLimit = TEN_MINUTES;
+        }  else {
+           timestampAgeLimit = GuacamoleProperties.getProperty(TIMESTAMP_AGE_LIMIT);
+        }
     }
 }

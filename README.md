@@ -10,35 +10,17 @@ configuration of remote desktop connections that are authorized using a
 pre-shared key. It is most appropriate for scenarios where you have an existing
 user authentication & authorization mechanism.
 
-## Installation
-
-The current release of guacamole-client (0.8.2) is missing some internal APIs
-used by this plugin, so you will have to build the [unstable branch][unstable]
-of Guacamole until those changes are released in a new version.
-
-The simplest way to get this running is to [install normally][guac-install] and
-then replace guacamole.war with a build of [guacamole-client@unstable][unstable].
-The manual explains [how to build guacamole-client from source][guac-build]. After building
-guacamole-client (via `mvn package`) it is helpful to install to your local Maven
-repository: `mvn install`.
-
-After you have a version of guacamole running that implements
-`SimpleConnectionDirectory.putConnection` you can build, deploy, and configure this
-auth plugin.
-
-[guac-install]: guac-dev.org/doc/gug/installing-guacamole.html
-[guac-build]: http://guac-dev.org/doc/gug/installing-guacamole.html#compiling-guacamole-client
-[unstable]: https://github.com/glyptodon/guacamole-client/tree/unstable
-
 ## Building
 
-guacamole-auth-hmac uses Maven for managing builds. After installing Maven and building and 
-installing guacamole-client in your local repository, build guacamole-auth-hmac:
-`mvn package`
+guacamole-auth-hmac uses Maven for managing builds. After installing Maven you can build a
+suitable jar for deployment with `mvn package`.
 
 The resulting jar file will be placed in `target/guacamole-auth-hmac-<version>.jar`.
 
 ## Deployment & Configuration
+
+**Warning** This plugin relies on API's introduced in Guacamole 0.8.3, so you must be running
+at least that version before using this plugin.
 
 Copy `guacamole-auth-hmac.jar` to the location specified by
 [`lib-directory`][config-classpath] in `guacamole.properties`. Then set the

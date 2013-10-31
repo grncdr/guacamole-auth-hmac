@@ -44,10 +44,12 @@ Copy `guacamole-auth-hmac.jar` to the location specified by
 [`lib-directory`][config-classpath] in `guacamole.properties`. Then set the
 `auth-provider` property to `com.stephensugden.guacamole.net.hmac.HmacAuthenticationProvider`.
 
-`guacamole-auth-hmac` adds one new config key to `guacamole.properties`:
+`guacamole-auth-hmac` adds two new config keys to `guacamole.properties`:
 
- * `secret-key` - This is the key that will be used to verify URL signatures.
+ * `secret-key` - The key that will be used to verify URL signatures.
     Whatever is generating the signed URLs will need to share this value.
+ * `timestamp-age-limit` - A numeric value (in milliseconds) that determines how long
+    a signed request should be valid for.
 
 
 [config-classpath]: http://guac-dev.org/doc/gug/configuring-guacamole.html#idp380240

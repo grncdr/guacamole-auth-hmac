@@ -72,13 +72,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <repositories>
-        <!-- Central Guacamole repository -->
-        <repository>
-            <id>guac-dev</id>
-            <url>http://guac-dev.org/repo</url>
-        </repository>
-
-    </repositories>
 </project>

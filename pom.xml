@@ -3,14 +3,41 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <name>guacamole-auth-hmac</name>
-
-    <packaging>jar</packaging>
-    <url>http://guac-dev.org/</url>
-
     <groupId>com.stephensugden.guacamole</groupId>
     <artifactId>guacamole-auth-hmac</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <name>guacamole-auth-hmac</name>
+    <url>https://github.com/grncdr/guacamole-auth-hmac</url>
+
+    <packaging>jar</packaging>
+
+    <scm>
+      <connection>scm:git:https://github.com/grncdr/guacamole-auth-hmac.git</connection>
+      <url>https://github.com/grncdr/guacamole-auth-hmac.git</url>
+    </scm>
+
+    <issueManagement>
+      <url>https://github.com/grncdr/guacamole-auth-hmac/issues</url>
+    </issueManagement>
+
+    <developers>
+      <developer>
+        <id>grncdr</id>
+        <name>Stephen Sugden</name>
+      </developer>
+    </developers>
+
+    <contributors>
+      <contributor>
+        <id>kived</id>
+        <name>Ryan Pessa</name>
+      </contributor>
+      <contributor>
+        <id>stephenryoungster</id>
+        <name>Stephen Young</name>
+      </contributor>
+    </contributors>
 
     <build>
         <plugins>
@@ -72,4 +99,10 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <parent>
+      <groupId>org.sonatype.oss</groupId>
+      <artifactId>oss-parent</artifactId>
+      <version>7</version>
+    </parent>
 </project>

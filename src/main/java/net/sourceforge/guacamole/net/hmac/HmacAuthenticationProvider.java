@@ -147,9 +147,14 @@ public class HmacAuthenticationProvider extends SimpleAuthenticationProvider {
     }
 
     private boolean checkTimestamp(String ts) {
+        if (timestampAgeLimit == 0) {
+            return true;
+        }
+
         if (ts == null) {
             return false;
         }
+
         long timestamp = Long.parseLong(ts, 10);
         long now = timeProvider.currentTimeMillis();
         return timestamp + timestampAgeLimit > now;

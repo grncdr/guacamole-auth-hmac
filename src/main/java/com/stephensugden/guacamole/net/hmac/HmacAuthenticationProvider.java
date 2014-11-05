@@ -87,7 +87,7 @@ public class HmacAuthenticationProvider extends SimpleAuthenticationProvider {
         HttpServletRequest request = credentials.getRequest();
         GuacamoleConfiguration config = getGuacamoleConfiguration(request);
         if (config == null) {
-            return context;
+            return null;
         }
         String id = config.getParameter("id");
         SimpleConnectionDirectory connections = (SimpleConnectionDirectory) context.getRootConnectionGroup().getConnectionDirectory();

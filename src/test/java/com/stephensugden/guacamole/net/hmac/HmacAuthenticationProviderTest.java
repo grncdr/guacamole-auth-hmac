@@ -3,6 +3,8 @@ package com.stephensugden.guacamole.net.hmac;
 import junit.framework.TestCase;
 import org.glyptodon.guacamole.GuacamoleException;
 import org.glyptodon.guacamole.net.auth.Credentials;
+import org.glyptodon.guacamole.net.auth.UserContext;
+import org.glyptodon.guacamole.net.auth.simple.SimpleUserContext;
 import org.glyptodon.guacamole.properties.GuacamoleProperties;
 import org.glyptodon.guacamole.protocol.GuacamoleConfiguration;
 import org.mockito.invocation.InvocationOnMock;
@@ -101,10 +103,16 @@ public class HmacAuthenticationProviderTest extends TestCase {
         HmacAuthenticationProvider authProvider = new HmacAuthenticationProvider(timeProvider);
 
         Map<String, GuacamoleConfiguration> configs = authProvider.getAuthorizedConfigurations(credentials);
-
         assertNull(configs);
+        
+        // test that updateUserContext also returns null when the timestamp is stale
+        Map<String, GuacamoleConfiguration> dummyConfigs = new HashMap<String, GuacamoleConfiguration>();
+        dummyConfigs.put("dummy", new GuacamoleConfiguration());
+        SimpleUserContext context = new SimpleUserContext(dummyConfigs);
+        UserContext updatedUserContext = authProvider.updateUserContext(context, credentials);
+        assertNull(updatedUserContext);
     }
-
+    
     private HttpServletRequest getHttpServletRequest() {
         return getHttpServletRequest(connectionId);
     }

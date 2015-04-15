@@ -36,6 +36,8 @@ public class HmacAuthenticationProvider extends SimpleAuthenticationProvider {
         public String getName() { return "timestamp-age-limit"; }
     };
 
+    private static final Logger logger = LoggerFactory.getLogger(HmacAuthenticationProvider.class);
+
     // these will be overridden by properties file if present
     private String defaultProtocol = "rdp";
     private long timestampAgeLimit = TEN_MINUTES; // 10 minutes
@@ -102,6 +104,8 @@ public class HmacAuthenticationProvider extends SimpleAuthenticationProvider {
         }
         String signature = request.getParameter(SIGNATURE_PARAM);
 
+        logger.debug("Get hmac signature: {}", signature);
+
         if (signature == null) {
             return null;
         }
@@ -135,6 +139,8 @@ public class HmacAuthenticationProvider extends SimpleAuthenticationProvider {
             message.append(name);
             message.append(value);
         }
+
+        logger.debug("Get hmac message: {}", message.toString());
 
         if (!signatureVerifier.verifySignature(signature, message.toString())) {
             return null;

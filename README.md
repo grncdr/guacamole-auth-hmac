@@ -10,7 +10,7 @@ The connect url should be like this:
 
 `http://guacamomle-host/client/c/3356?id=c%2F3356&timestamp=1429076162000&guac.hostname=192.168.42.3&guac.protocol=vnc&guac.password=123456&guac.port=5901&signature=OQ7g3xkZC75BXMS6TlpOudNTvr8%3D`
 
-There were a problem in command `mvn package`, it will be failed at testing. I ignore this by skip test `mvn package -Dmaven.test.skip=true`.
+There were a problem in command (`mvn package`), it will be failed at testing. I ignore this by skipping test(`mvn package -Dmaven.test.skip=true`).
 
 
 ## Description
@@ -52,7 +52,7 @@ Copy `guacamole-auth-hmac.jar` to the location specified by
 ## Usage
 
 To generate a signed URL for usage with this plugin, simply use the path to
-Guacamole's built-in `/client.xhtml` as a base, and append the following query
+Guacamole's built-in ~~`/client.xhtml`~~ as a base, and append the following query
 parameters:
 
  * `id`  - A connection ID that must be unique per user session.
@@ -81,7 +81,7 @@ from the request parameters as follows:
 
 Given a request for the following URL:
 
-`client.xhtml?id=example&guac.protocol=rdp&guac.hostname=myserver.internal&guac.port=3389&timestamp=1377143741000`
+~~`client.xhtml?id=example&guac.protocol=rdp&guac.hostname=myserver.internal&guac.port=3389&timestamp=1377143741000`~~
 
 The message to be signed will be the concatenation of the following strings:
 

@@ -92,7 +92,7 @@ public class HmacAuthenticationProvider extends SimpleAuthenticationProvider {
             return null;
         }
         String id = config.getParameter("id");
-        SimpleConnectionDirectory connections = (SimpleConnectionDirectory) context.getRootConnectionGroup().getConnectionDirectory();
+        SimpleConnectionDirectory connections = (SimpleConnectionDirectory) context.getConnectionDirectory();
         SimpleConnection connection = new SimpleConnection(id, id, config);
         connections.putConnection(connection);
         return context;

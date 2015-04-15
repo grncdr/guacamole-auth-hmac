@@ -1,5 +1,15 @@
 # guacamole-auth-hmac [![Build Status](https://travis-ci.org/grncdr/guacamole-auth-hmac.png?branch=master)](https://travis-ci.org/grncdr/guacamole-auth-hmac)
 
+## Update
+From guacamole 0.9.4 something changed:
++ GUAC-1102: Reconstitute consumed HTTP requests with an external collection of parameter name/value pairs[https://github.com/glyptodon/guacamole-client/pull/144]
++ GUAC-1100: Move connection and connection group directories to root...[https://github.com/glyptodon/guacamole-client/commit/6f61300cbc59c75e67a8ccf3b9e9de01471eda2e]
+
+Now guacamole-auth-hmac can work with guacamole-0.9.6 after I fixed somehting.
+The connect url should be like this:
+
+`http://guacamomle-host/client/c/3356?id=c%2F3356&timestamp=1429076162000&guac.hostname=192.168.42.3&guac.protocol=vnc&guac.password=123456&guac.port=5901&signature=OQ7g3xkZC75BXMS6TlpOudNTvr8%3D`
+
 ## Description
 
 This project is a plugin for [Guacamole](http://guac-dev.org), an HTML5 based

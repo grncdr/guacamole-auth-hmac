@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.stephensugden.guacamole</groupId>
     <artifactId>guacamole-auth-hmac</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.1</version>
 
     <name>guacamole-auth-hmac</name>
     <url>https://github.com/grncdr/guacamole-auth-hmac</url>
@@ -67,7 +67,7 @@
         <dependency>
             <groupId>org.glyptodon.guacamole</groupId>
             <artifactId>guacamole-ext</artifactId>
-            <version>0.8.1</version>
+            <version>0.9.6</version>
         </dependency>
 
         <dependency>

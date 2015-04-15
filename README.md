@@ -2,8 +2,10 @@
 
 ## Update
 Start  guacamole 0.9.4 something changed:
-+ [GUAC-1102: Reconstitute consumed HTTP requests with an external collection of parameter name/value pairs](https://github.com/glyptodon/guacamole-client/pull/144)
-+ [GUAC-1100: Move connection and connection group directories to root...](https://github.com/glyptodon/guacamole-client/commit/6f61300cbc59c75e67a8ccf3b9e9de01471eda2e)
++ [GUAC-1102: Reconstitute consumed HTTP requests with an external collection of parameter name/value pairs](https://github.com/glyptodon/guacamole-client/pull/144) done after relase of guacamole 0.9.6;
+  Because this fix was done after release of guacamole 0.9.6, you need latest guacamole source code to build gucamole.war to work with this guacamole-auth-ham ext.
+
++ [GUAC-1100: Move connection and connection group directories to root...](https://github.com/glyptodon/guacamole-client/commit/6f61300cbc59c75e67a8ccf3b9e9de01471eda2e);
 
 Now guacamole-auth-hmac can work with guacamole-0.9.6 after I fixed somehting.
 The connect url should be like this:

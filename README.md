@@ -10,7 +10,7 @@ Start  guacamole 0.9.4 something changed:
 Now guacamole-auth-hmac can work with guacamole-0.9.6 after I fixed somehting.
 The connect url should be like this:
 
-`http://guacamomle-host/client/c/3356?id=c%2F3356&timestamp=1429076162000&guac.hostname=192.168.42.3&guac.protocol=vnc&guac.password=123456&guac.port=5901&signature=OQ7g3xkZC75BXMS6TlpOudNTvr8%3D`
+`http://guacamomle-host/#/client/c/3356?id=c%2F3356&timestamp=1429076162000&guac.hostname=192.168.42.3&guac.protocol=vnc&guac.password=123456&guac.port=5901&signature=OQ7g3xkZC75BXMS6TlpOudNTvr8%3D`
 
 There were a problem in command (`mvn package`), it will be failed at testing. I ignore this by skipping test(`mvn package -Dmaven.test.skip=true`).
 

@@ -26,12 +26,14 @@ user authentication & authorization mechanism.
 
 ## Usage
 
-First step, use flowing parameters to get auth token from the rest api `/api/token` of guacamole web server.
+#### First
+
+Use flowing parameters to get auth token from the rest api `/api/token` of guacamole web server.
 
  * `GUAC_ID`  - A connection ID that must be unique per user session;
  * `GUAC_TYPE`  - connection type, 'c' or 'g';
  * `timestamp` - A unix timestamp in milliseconds, this is used to prevent replay attacks;
- * `signature` - The [request signature][#request-signing];
+ * `signature` - The signature string;
  * `guac.protocol` - One of `vnc`, `rdp`, or `ssh`;
  * `guac.hostname` - The hostname of the remote desktop server to connect to;
  * `guac.port` - The port number to connect to;
@@ -52,12 +54,22 @@ The json response from `/api/token` like:
 
 ```
 
-Second step,  use flowing parameters to initialize the websocket connection to guacamole tunnel endpoint `/websocket-tunnel`.
+#### Second
+
+Use flowing parameters to initialize the websocket connection to guacamole tunnel endpoint `/websocket-tunnel`.
 
  * `GUAC_ID` - A connection ID specified in first step;
  * `GUAC_TYPE` - Connection type specified in first step;
  * `GUAC_DATA_SOURCE` - The authentication provider identifier, always is 'hmac';
  * `token` -  Auth token in `/api/token` guacamole rest api response json;
+
+
+## How to signing ?
+Requests must be signed with an HMAC, where the message content is generated from the request parameters as follows:
+
+* 1. The value of parameters `timestamp`, `guac.protocol` are concatenated;
+* 2. For each of `guac.username`, `guac.password`, `guac.hostname`, and `guac.port` (must in this order),  if the parameter was included in the request, append it's unprefixed name (e.g. - guac.username becomes username) followed by it's value.
+
 
 
 ## License

@@ -3,8 +3,7 @@ out
 target
 build
 .DS_STORE
-.gradle
-build.gradle
+.gradle/
 *.ipr
 *.iws
 *.iml

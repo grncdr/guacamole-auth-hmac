@@ -1,5 +1,9 @@
 # guacamole-auth-hmac [![Build Status](https://travis-ci.org/grncdr/guacamole-auth-hmac.png?branch=master)](https://travis-ci.org/grncdr/guacamole-auth-hmac)
 
+## WARNING! Unmaintained!
+
+This was written for a client, and as I have no personal use for it, I'm not maintaining it anymore.
+
 ## Description
 
 This project is a plugin for [Guacamole](http://guac-dev.org), an HTML5 based

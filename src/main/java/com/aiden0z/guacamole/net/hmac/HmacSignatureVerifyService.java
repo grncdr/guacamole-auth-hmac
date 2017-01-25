@@ -1,21 +1,30 @@
-package com.stephensugden.guacamole.net.hmac;
+package com.aiden0z.guacamole.net.hmac;
 
+import com.google.inject.Inject;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.glyptodon.guacamole.GuacamoleException;
+import org.glyptodon.guacamole.environment.Environment;
+import org.glyptodon.guacamole.properties.StringGuacamoleProperty;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-public class SignatureVerifier {
+public class HmacSignatureVerifyService {
+
     private final SecretKeySpec secretKey;
 
-    private Logger logger = LoggerFactory.getLogger(SignatureVerifier.class);
+    static final StringGuacamoleProperty SECRET_KEY = new StringGuacamoleProperty() {
+        @Override
+        public String getName() {
+            return "secret-key";
+        }
+    };
 
-    public SignatureVerifier(String secretKey) {
-        this.secretKey = new SecretKeySpec(secretKey.getBytes(), "HmacSHA1");
+    @Inject
+    public HmacSignatureVerifyService(Environment env) throws GuacamoleException {
+        this.secretKey = new SecretKeySpec(env.getRequiredProperty(SECRET_KEY).getBytes(), "HmacSHA1");
     }
 
     public boolean verifySignature(String signature, String message) {

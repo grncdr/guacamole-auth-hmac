@@ -1,0 +1,9 @@
+{
+
+  "guacamoleVersion" : "0.9.9",
+  "name"      : "Hmac Authentication",
+  "namespace" : "guac-hmac",
+
+  "authProviders" : ["com.aiden0z.guacamole.net.hmac.HmacAuthenticationProvider"]
+
+}
